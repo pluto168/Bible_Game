@@ -9,17 +9,18 @@ import java.awt.*;
 
 public class Main extends JPanel {
 
-    public static final int CELL = 50;    //每一格佔多少像素
-    public static final int WIDTH = 500;
+    public static final int CELL = 50;    //每一格佔多少像素px
+    public static final int WIDTH = 500;     //整個螢幕500x500
     public static final int HEIGHT = 500;
 
-    public static final int ROW = HEIGHT / CELL;  //橫行
-    public static final int COLUMN = WIDTH / CELL;   //直行
+    public static final int ROW = HEIGHT / CELL;  //橫行的數量
+    public static final int COLUMN = WIDTH / CELL;   //直行的數量
 
     Moses moses;
     public static GameView gameView;
 
     public Main(){
+        //指定 Moses 对象的初始位置。
         moses = new Moses(1,1);
         gameView = new DisasterView();
     }
@@ -32,17 +33,26 @@ public class Main extends JPanel {
 
     @Override
     public void paintComponent(Graphics g){
+        // 在画板上绘制游戏视图
         gameView.drawView(g);
+        // 绘制 Moses 对象
         moses.draw(g);
     }
 
     public static void main(String[] args) {
+        // 创建一个 JFrame 对象
         JFrame window = new JFrame();
+        // 设置窗口关闭操作为退出应用程序
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // 将 Main 对象设置为窗口的内容面板
         window.setContentPane(new Main());
+        // 调整窗口大小以适应内容面板的大小
         window.pack();
+        // 将窗口位置设置为屏幕中央
         window.setLocationRelativeTo(null);
+        // 设置窗口可见
         window.setVisible(true);
+        // 禁用窗口的调整大小功能
         window.setResizable(false);
     }
 }
