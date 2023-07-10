@@ -6,8 +6,10 @@ import com.company.Sprite.Moses;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Main extends JPanel {
+public class Main extends JPanel implements KeyListener {      //implements KeyListener使用鍵盤
 
     public static final int CELL = 50;    //每一格佔多少像素px
     public static final int WIDTH = 500;     //整個螢幕500x500
@@ -23,6 +25,8 @@ public class Main extends JPanel {
         //指定 Moses 对象的初始位置。
         moses = new Moses(1,1);
         gameView = new DisasterView();
+        //
+        addKeyListener(this);
     }
 
 
@@ -37,6 +41,8 @@ public class Main extends JPanel {
         gameView.drawView(g);
         // 绘制 Moses 对象
         moses.draw(g);
+        //
+        requestFocusInWindow();
     }
 
     public static void main(String[] args) {
@@ -54,5 +60,45 @@ public class Main extends JPanel {
         window.setVisible(true);
         // 禁用窗口的调整大小功能
         window.setResizable(false);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        Point mossPoint = moses.getRelativePosition();
+        //System.out.println(mossPoint.x+ ", "+ mossPoint.y);  //查看方向鍵座標
+        switch (e.getExtendedKeyCode()){
+            case KeyEvent.VK_UP:
+                if(mossPoint.y > 1){
+                    mossPoint.y -= 1;      //要按往上
+                }
+                break;
+            case KeyEvent.VK_DOWN:
+                if(mossPoint.y < ROW){
+                    mossPoint.y += 1;      //按往下
+                }
+                break;
+            case KeyEvent.VK_RIGHT:
+                if(mossPoint.x < COLUMN){
+                    mossPoint.x += 1;      //往右
+                }
+                break;
+            case KeyEvent.VK_LEFT:
+                if(mossPoint.x > 1){     //>1代表可以在往左邊走
+                    mossPoint.x -= 1;    //往左
+                }
+                break;
+        }
+        moses.setPosition(mossPoint);
+        repaint();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

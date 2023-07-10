@@ -2,6 +2,7 @@ package com.company.Sprite;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Moses extends Sprite{
     public Moses(int x, int y){
@@ -13,4 +14,5 @@ public class Moses extends Sprite{
     public String overlap(int x, int y) {
         return null;
     }
+
 }

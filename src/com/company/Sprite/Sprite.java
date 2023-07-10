@@ -13,7 +13,9 @@ public abstract class Sprite {                          //抽象类是一种特�
     protected Point absolutePosition;   //絕對位子
 
     public void draw(Graphics g){
-        img.paintIcon(null, g, absolutePosition.x, absolutePosition.y);
+        if(relativePosition != null){    //moses殺死青蛙等後變成null
+            img.paintIcon(null, g, absolutePosition.x, absolutePosition.y);
+        }
     }
 
     public void setPosition(Point p){
