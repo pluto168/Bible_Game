@@ -3,7 +3,7 @@ package com.company.Sprite;
 
 import com.company.GameView.DisasterView;
 import com.company.GameView.RedSeaGameView;
-import com.company.GameView.TenCommandmentsView;
+import com.company.GameView.TenComandmentsView;
 import com.company.Main;
 import com.company.Sprite.DisasterViewSprite.Bug;
 import com.company.Sprite.DisasterViewSprite.Frog;
@@ -83,10 +83,18 @@ public class Moses extends Sprite{
             if (x == door.getRelativePosition().x && y == door.getRelativePosition().y) {
                 return "Next level";
             }
-        }else if(Main.gameView instanceof TenCommandmentsView){
-            TenCommandment stone = ((TenCommandmentsView) Main.gameView).getStone();
-            if(x == stone.getRelativePosition().x && y == getRelativePosition().y ){
-                return "Game Over";
+        }else if(Main.gameView instanceof TenComandmentsView){
+            ArrayList<TenCommandment> stones = ((TenComandmentsView) Main.gameView).getStones();
+            for(TenCommandment stone : stones){
+                if(stone.getRelativePosition() != null && stone.getRelativePosition().x == x && stone.getRelativePosition().y == y ){
+                    stone.setNullPosition();
+                    ((TenComandmentsView) Main.gameView).setCount(1);
+                    if(((TenComandmentsView) Main.gameView).getCount() == 10){
+                        return "Game Over";
+                    }else{
+                        return "none";
+                    }
+                }
             }
         }
         return "none";

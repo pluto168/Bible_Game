@@ -3,7 +3,7 @@ package com.company;
 import com.company.GameView.DisasterView;
 import com.company.GameView.GameView;
 import com.company.GameView.RedSeaGameView;
-import com.company.GameView.TenCommandmentsView;
+import com.company.GameView.TenComandmentsView;
 import com.company.Sprite.DisasterViewSprite.Bug;
 import com.company.Sprite.DisasterViewSprite.Frog;
 import com.company.Sprite.DisasterViewSprite.Ice;
@@ -86,7 +86,7 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
             if(level == 2){
                 resetGame(new RedSeaGameView());
             }else if(level == 3){
-                resetGame(new TenCommandmentsView());
+                resetGame(new TenComandmentsView());
             }
             return true;
         }
