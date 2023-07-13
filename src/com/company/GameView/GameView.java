@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.company.Main;
 import com.company.Sprite.*;
+import com.company.Sprite.RedSeaViewSprite.Cat;
 
 public abstract class GameView {                //抽象类是一种特殊的类，无法直接实例化，只能被继承。
 
@@ -21,4 +22,13 @@ public abstract class GameView {                //抽象类是一种特殊的类
             s.draw(g);
         }
     }
+
+    public Door getDoor(){
+        return this.door;
+    }
+
+    public ArrayList<Sprite> getElements(){
+        return this.elements;
+    }
+
 }

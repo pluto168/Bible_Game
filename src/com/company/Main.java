@@ -2,6 +2,8 @@ package com.company;
 
 import com.company.GameView.DisasterView;
 import com.company.GameView.GameView;
+import com.company.GameView.RedSeaGameView;
+import com.company.GameView.TenCommandmentsView;
 import com.company.Sprite.Moses;
 
 import javax.swing.*;
@@ -23,13 +25,14 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
     private int level;    //目前關卡的level在那裡
 
     public Main(){
+        level = 1;
         resetGame(new DisasterView());
         addKeyListener(this);
 
     }
 
     public void resetGame(GameView game){
-        level = 1;
+
         //指定 Moses 对象的初始位置。
         moses = new Moses(1,1);
         gameView = game;
@@ -69,6 +72,19 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
         window.setResizable(false);
     }
 
+    private boolean changeLevel(String result){
+        if(result.equals("Next level")){
+            level++;
+            if(level == 2){
+                resetGame(new RedSeaGameView());
+            }else if(level == 3){
+                resetGame(new TenCommandmentsView());
+            }
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -91,6 +107,12 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
                         mossPoint.y -= 1;      //要按往上
                     }
+                    if(result.equals("Game Over")){
+                        JOptionPane.showMessageDialog(this,"你贏了!!");
+                        return;
+                    }
+                     if(changeLevel(result)) return;
+
                 }
                 break;
             case KeyEvent.VK_DOWN:
@@ -98,6 +120,7 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     String result = moses.overlap(mossPoint.x,mossPoint.y + 1);
                     if(result.equals("Die")){
                         //reset game
+                        level = 1;
                         JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
                         resetGame(new DisasterView());
                         return;
@@ -105,6 +128,11 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
                         mossPoint.y += 1;      //按往下
                     }
+                    if(result.equals("Game Over")){
+                        JOptionPane.showMessageDialog(this,"你贏了!!");
+                        return;
+                    }
+                    if(changeLevel(result)) return;
                 }
                 break;
             case KeyEvent.VK_RIGHT:
@@ -112,6 +140,7 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     String result = moses.overlap(mossPoint.x + 1,mossPoint.y);
                     if(result.equals("Die")){
                         //reset game
+                        level = 1;
                         JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
                         resetGame(new DisasterView());
                         return;
@@ -119,6 +148,11 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
                         mossPoint.x += 1;      //往右
                     }
+                    if(result.equals("Game Over")){
+                        JOptionPane.showMessageDialog(this,"你贏了!!");
+                        return;
+                    }
+                    if(changeLevel(result)) return;
                 }
                 break;
             case KeyEvent.VK_LEFT:
@@ -126,6 +160,7 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     String result = moses.overlap(mossPoint.x - 1,mossPoint.y);
                     if(result.equals("Die")){
                         //reset game
+                        level = 1;
                         JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
                         resetGame(new DisasterView());
                         return;
@@ -133,6 +168,11 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
                         mossPoint.x -= 1;    //往左
                     }
+                    if(result.equals("Game Over")){
+                        JOptionPane.showMessageDialog(this,"你贏了!!");
+                        return;
+                    }
+                    if(changeLevel(result)) return;
                 }
                 break;
         }
