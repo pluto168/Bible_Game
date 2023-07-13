@@ -4,7 +4,15 @@ import com.company.GameView.DisasterView;
 import com.company.GameView.GameView;
 import com.company.GameView.RedSeaGameView;
 import com.company.GameView.TenCommandmentsView;
+import com.company.Sprite.DisasterViewSprite.Bug;
+import com.company.Sprite.DisasterViewSprite.Frog;
+import com.company.Sprite.DisasterViewSprite.Ice;
+import com.company.Sprite.DisasterViewSprite.Tombstone;
 import com.company.Sprite.Moses;
+import com.company.Sprite.RedSeaViewSprite.Anubis;
+import com.company.Sprite.RedSeaViewSprite.Cat;
+import com.company.Sprite.RedSeaViewSprite.Pharoah;
+import com.company.Sprite.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,6 +108,7 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                     String result = moses.overlap(mossPoint.x,mossPoint.y - 1);
                     if(result.equals("Die")){
                         //reset game
+                        level = 1;
                         JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
                         resetGame(new DisasterView());
                         return;
@@ -173,6 +182,75 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
                         return;
                     }
                     if(changeLevel(result)) return;
+                }
+                break;
+
+            //射擊設定
+            case KeyEvent.VK_W:
+                for(int i = mossPoint.y; i > 0;i--){
+                    for(Sprite s : gameView.getElements()){
+                        if(s.getRelativePosition() != null && s.getRelativePosition().x==mossPoint.x && s.getRelativePosition().y == i){
+                            if(s instanceof Cat || s instanceof Ice || s instanceof Tombstone){
+                                return;
+                            }
+                            if(s instanceof Anubis || s instanceof Pharoah || s instanceof Bug || s instanceof Frog){
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case KeyEvent.VK_S:
+                for(int i = mossPoint.y; i <= ROW; i++){
+                    for(Sprite s : gameView.getElements()){
+                        if(s.getRelativePosition() != null && s.getRelativePosition().x==mossPoint.x && s.getRelativePosition().y == i){
+                            if(s instanceof Cat || s instanceof Ice || s instanceof Tombstone){
+                                return;
+                            }
+                            if(s instanceof Anubis || s instanceof Pharoah || s instanceof Bug || s instanceof Frog){
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case KeyEvent.VK_D:
+                for(int i = mossPoint.x; i <= COLUMN; i++){
+                    for(Sprite s : gameView.getElements()){
+                        if(s.getRelativePosition() != null && s.getRelativePosition().x == i && s.getRelativePosition().y == mossPoint.y){
+                            if(s instanceof Cat || s instanceof Ice || s instanceof Tombstone){
+                                return;
+                            }
+                            if(s instanceof Anubis || s instanceof Pharoah || s instanceof Bug || s instanceof Frog){
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case KeyEvent.VK_A:
+                for(int i = mossPoint.x; i > 0; i--){
+                    for(Sprite s : gameView.getElements()){
+                        if(s.getRelativePosition() != null && s.getRelativePosition().x == i && s.getRelativePosition().y == mossPoint.y){
+                            if(s instanceof Cat || s instanceof Ice || s instanceof Tombstone){
+                                return;
+                            }
+                            if(s instanceof Anubis || s instanceof Pharoah || s instanceof Bug || s instanceof Frog){
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
                 }
                 break;
         }
