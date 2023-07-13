@@ -3,6 +3,8 @@ package com.company.GameView;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
+import com.company.Main;
 import com.company.Sprite.*;
 
 public abstract class GameView {                //抽象类是一种特殊的类，无法直接实例化，只能被继承。
@@ -13,6 +15,8 @@ public abstract class GameView {                //抽象类是一种特殊的类
 
     public void drawView(Graphics g){
         img.paintIcon(null, g, 0, 0);
+        g.setColor(new Color(0f,0f,0f,.3f)); //背景黑色遮罩
+        g.fillRect(0,0, Main.WIDTH,Main.HEIGHT);
         for(Sprite s : elements){
             s.draw(g);
         }

@@ -20,13 +20,20 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
 
     Moses moses;
     public static GameView gameView;
+    private int level;    //目前關卡的level在那裡
 
     public Main(){
+        resetGame(new DisasterView());
+        addKeyListener(this);
+
+    }
+
+    public void resetGame(GameView game){
+        level = 1;
         //指定 Moses 对象的初始位置。
         moses = new Moses(1,1);
-        gameView = new DisasterView();
-        //
-        addKeyListener(this);
+        gameView = game;
+        repaint();
     }
 
 
@@ -74,22 +81,58 @@ public class Main extends JPanel implements KeyListener {      //implements KeyL
         switch (e.getExtendedKeyCode()){
             case KeyEvent.VK_UP:
                 if(mossPoint.y > 1){
-                    mossPoint.y -= 1;      //要按往上
+                    String result = moses.overlap(mossPoint.x,mossPoint.y - 1);
+                    if(result.equals("Die")){
+                        //reset game
+                        JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
+                        mossPoint.y -= 1;      //要按往上
+                    }
                 }
                 break;
             case KeyEvent.VK_DOWN:
                 if(mossPoint.y < ROW){
-                    mossPoint.y += 1;      //按往下
+                    String result = moses.overlap(mossPoint.x,mossPoint.y + 1);
+                    if(result.equals("Die")){
+                        //reset game
+                        JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
+                        mossPoint.y += 1;      //按往下
+                    }
                 }
                 break;
             case KeyEvent.VK_RIGHT:
                 if(mossPoint.x < COLUMN){
-                    mossPoint.x += 1;      //往右
+                    String result = moses.overlap(mossPoint.x + 1,mossPoint.y);
+                    if(result.equals("Die")){
+                        //reset game
+                        JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
+                        mossPoint.x += 1;      //往右
+                    }
                 }
                 break;
             case KeyEvent.VK_LEFT:
                 if(mossPoint.x > 1){     //>1代表可以在往左邊走
-                    mossPoint.x -= 1;    //往左
+                    String result = moses.overlap(mossPoint.x - 1,mossPoint.y);
+                    if(result.equals("Die")){
+                        //reset game
+                        JOptionPane.showMessageDialog(this,"你已經GG,請重新開始");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if(!result.equals("Cannot move")){     //如果他不是遇到他不能動的情況
+                        mossPoint.x -= 1;    //往左
+                    }
                 }
                 break;
         }
